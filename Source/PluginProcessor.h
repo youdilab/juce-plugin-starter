@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "config.h"
 
 //==============================================================================
 /**
@@ -59,12 +60,20 @@ private:
     
     //Adding parameters to parameter layout.
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
-    {
-        return
+    {   
+        juce::AudioProcessorValueTreeState::ParameterLayout params;
+
+        //Lambda function to add juce::AudioParameterFloat
+        const auto addFloatParameter = [&](parameters::audioParameterFloat paramFloat)
         {
-            std::make_unique<juce::AudioParameterFloat>("volume1","Volume 1",0.0f,100.0f,0.5f),
-            std::make_unique<juce::AudioParameterFloat>("volume2","Volume 2",0.0f,100.0f,0.5f)
+            params.add(std::make_unique<juce::AudioParameterFloat>(paramFloat.id, paramFloat.name, paramFloat.minValue, paramFloat.maxValue, paramFloat.defaultValue));
         };
+
+        //Adding parameters using above lambda functions.
+        addFloatParameter(parameters::volume1);
+        addFloatParameter(parameters::volume2);
+
+        return params;
     };
 
     //Accessing parameters.

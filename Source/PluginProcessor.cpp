@@ -22,10 +22,10 @@ YoudiTemplateAudioProcessor::YoudiTemplateAudioProcessor()
                        )
 #endif
     ,parameters(*this,nullptr,juce::Identifier("APVTS"),createParameterLayout())
-    ,paramReadVolume1(parameters.getRawParameterValue("volume1"))
-    ,paramReadVolume2(parameters.getRawParameterValue("volume2"))
-    ,paramVolume1(parameters.getParameter("volume1"))
-    ,paramVolume2(parameters.getParameter("volume2"))
+    ,paramReadVolume1(parameters.getRawParameterValue(parameters::volume1.id))
+    ,paramReadVolume2(parameters.getRawParameterValue(parameters::volume2.id))
+    ,paramVolume1(parameters.getParameter(parameters::volume1.id))
+    ,paramVolume2(parameters.getParameter(parameters::volume2.id))
 {
 }
 

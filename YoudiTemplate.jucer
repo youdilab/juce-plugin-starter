@@ -4,7 +4,9 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="erTKYQ" name="YoudiTemplate">
     <GROUP id="{69B01BEE-0F55-8B72-5FB8-F854BDC0554F}" name="Source">
-      <FILE id="fX3NGS" name="Common.h" compile="0" resource="0" file="Source/Common.h"/>
+      <FILE id="FGvFoz" name="Config.h" compile="0" resource="0" file="Source/Config.h"/>
+      <FILE id="NlaC91" name="CommonIncludes.h" compile="0" resource="0"
+            file="Source/CommonIncludes.h"/>
       <FILE id="RY5mDC" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="vFyNHA" name="PluginProcessor.h" compile="0" resource="0"

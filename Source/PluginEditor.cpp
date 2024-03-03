@@ -22,8 +22,8 @@ YoudiTemplateAudioProcessorEditor::YoudiTemplateAudioProcessorEditor (YoudiTempl
     addAndMakeVisible(sldVolume1);
     addAndMakeVisible(sldVolume2);
 
-    attchVolume1.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(apvts, "volume1", sldVolume1));
-    attchVolume2.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(apvts, "volume2", sldVolume2));
+    attchVolume1.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(apvts, parameters::volume1.id, sldVolume1));
+    attchVolume2.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(apvts, parameters::volume2.id, sldVolume2));
 }
 
 YoudiTemplateAudioProcessorEditor::~YoudiTemplateAudioProcessorEditor()
