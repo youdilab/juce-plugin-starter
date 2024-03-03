@@ -21,6 +21,11 @@ YoudiTemplateAudioProcessor::YoudiTemplateAudioProcessor()
                      #endif
                        )
 #endif
+    ,parameters(*this,nullptr,juce::Identifier("APVTS"),createParameterLayout())
+    ,paramReadVolume1(parameters.getRawParameterValue("volume1"))
+    ,paramReadVolume2(parameters.getRawParameterValue("volume2"))
+    ,paramVolume1(parameters.getParameter("volume1"))
+    ,paramVolume2(parameters.getParameter("volume2"))
 {
 }
 
@@ -166,21 +171,26 @@ bool YoudiTemplateAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* YoudiTemplateAudioProcessor::createEditor()
 {
-    return new YoudiTemplateAudioProcessorEditor (*this);
+    return new YoudiTemplateAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
 void YoudiTemplateAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    //Source: https://docs.juce.com/master/tutorial_audio_processor_value_tree_state.html
+    auto state = parameters.copyState();
+    std::unique_ptr<juce::XmlElement> xml(state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void YoudiTemplateAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    //Source: https://docs.juce.com/master/tutorial_audio_processor_value_tree_state.html
+    std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName(parameters.state.getType()))
+            parameters.replaceState(juce::ValueTree::fromXml(*xmlState));
 }
 
 //==============================================================================

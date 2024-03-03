@@ -34,5 +34,6 @@
 *.app
 
 # JUCE files not version controlled.
+.IGNORE
 Builds/
 JuceLibraryCode/

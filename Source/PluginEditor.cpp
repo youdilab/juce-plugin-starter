@@ -10,12 +10,20 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-YoudiTemplateAudioProcessorEditor::YoudiTemplateAudioProcessorEditor (YoudiTemplateAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+YoudiTemplateAudioProcessorEditor::YoudiTemplateAudioProcessorEditor (YoudiTemplateAudioProcessor& p, juce::AudioProcessorValueTreeState& valueTree)
+    : AudioProcessorEditor (&p), audioProcessor (p), apvts(valueTree)
+    ,sldVolume1(juce::Slider::SliderStyle::LinearHorizontal,juce::Slider::TextEntryBoxPosition::TextBoxBelow)
+    ,sldVolume2(juce::Slider::SliderStyle::LinearHorizontal, juce::Slider::TextEntryBoxPosition::TextBoxBelow)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (400, 400);
+
+    addAndMakeVisible(sldVolume1);
+    addAndMakeVisible(sldVolume2);
+
+    attchVolume1.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(apvts, "volume1", sldVolume1));
+    attchVolume2.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(apvts, "volume2", sldVolume2));
 }
 
 YoudiTemplateAudioProcessorEditor::~YoudiTemplateAudioProcessorEditor()
@@ -25,16 +33,10 @@ YoudiTemplateAudioProcessorEditor::~YoudiTemplateAudioProcessorEditor()
 //==============================================================================
 void YoudiTemplateAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void YoudiTemplateAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    sldVolume1.setBounds(20, 20, 300, 30);
+    sldVolume2.setBounds(20, 70, 300, 30);
 }
